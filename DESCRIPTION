@@ -1,0 +1,20 @@
+Package: qbashtools
+Title: Bash Tools for FB-ZWS Qualitas AG
+Version: 0.0.1
+Authors@R: 
+    person(given = "Peter",
+           family = "von Rohr",
+           role = c("aut", "cre"),
+           email = "peter.vonrohr@qualitasag.ch")
+Description: Collection of bash tools which are useful for daily tasks in 
+    FB-ZWS at Qualitas AG.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Language: en
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

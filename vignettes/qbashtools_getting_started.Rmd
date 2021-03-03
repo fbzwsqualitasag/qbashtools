@@ -1,0 +1,23 @@
+---
+title: "Getting Started with qbashtools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with qbashtools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Disclaimer
+The basic steps of getting started with `qbashtools` are described.
+
+
+## Background
+In genetic evaluations or statistical analyses many steps are identical or at least similar to some degree.   
