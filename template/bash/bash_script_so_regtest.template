@@ -1,0 +1,45 @@
+#!/bin/bash
+#' ---
+#' title: __TITLE__
+#' date:  __STARTDATE__
+#' author: __AUTHOR__
+#' ---
+#'
+#' ## Purpose
+#' __PURPOSE__ {Write a paragraph about what problems are solved with this script.}
+#'
+#' ## Description
+#' __DESCRIPTION__ {Write a paragraph about how the problems are solved.}
+#'
+#' ## Details
+#' __DETAILS__ {Give some more details here.}
+#'
+#' ## Example
+#' __EXAMPLE__ {Specify an example call of the script.}
+#'
+#' ## Set Directives
+#' General behavior of the script is driven by the following settings
+#+ env-set
+set -o errexit    # exit immediately, if single command exits with non-zero status
+set -o nounset    # treat unset variables as errors
+set -o pipefail   # return value of pipeline is value of last command to exit with non-zero status
+                  # hence pipe fails if one command in pipe fails
+
+#' ## Global Constants
+#' In this section, global constants for the test are defined
+#+ global-const-def
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+SCRIPT=$(basename ${BASH_SOURCE[0]})
+
+#' ## Preparation
+#' Preparatory steps, if any, are added here ...
+#+ prep-step
+
+#' ## Main Part
+#' Main part of the scripts comes here ...
+#+ main-part
+
+#' ## Clean Up
+#' Any cleaning up after the test is done here.
+#+ clean-up
+
