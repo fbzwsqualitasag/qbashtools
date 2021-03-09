@@ -101,7 +101,7 @@ while getopts ":frs:t:h" FLAG; do
       RECURSIVEMODE='TRUE'
       ;;
     s)
-      if test -f $OPTARG; then
+      if test -e $OPTARG; then
         SRCPATH=$OPTARG
       else
         usage "$OPTARG isn't a regular file"
