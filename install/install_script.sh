@@ -136,10 +136,16 @@ fi
 #' ## Recursive Mode
 #' If target directory does not exist and the recursive mode is specified 
 #' the target directory is created
-if [ "$RECURSIVEMODE" == 'TRUE' ] && [ ! -d "$TRGPATH" ]
-then
-  log_msg $SCRIPT " * Recursive mode create target directory: $TRGPATH ..."
-  mkdir -p "$TRGPATH"
+if [ ! -d "$TRGPATH" ]
+the
+  if [ "$RECURSIVEMODE" == 'TRUE' ]
+  then
+    log_msg $SCRIPT " * Recursive mode create target directory: $TRGPATH ..."
+    mkdir -p "$TRGPATH"
+  else 
+    log_msg $SCRIPT " * ERROR cannot find target directory: $TRGPATH ..."
+    usage "-r runs in recursive mode"
+  fi  
 fi
 
 #' ## Install Mode 
