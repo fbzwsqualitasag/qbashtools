@@ -137,7 +137,7 @@ fi
 #' If target directory does not exist and the recursive mode is specified 
 #' the target directory is created
 if [ ! -d "$TRGPATH" ]
-the
+then
   if [ "$RECURSIVEMODE" == 'TRUE' ]
   then
     log_msg $SCRIPT " * Recursive mode create target directory: $TRGPATH ..."
