@@ -1,20 +1,20 @@
 #!/bin/bash
 #' ---
-#' title: Create Stand-Alone Bash Script
-#' date:  2021-03-09 08:08:42
+#' title: Create Stand-Alone Bash Script For Routine
+#' date:  2021-03-09 17:42:03
 #' author: Peter von Rohr
 #' ---
 #' ## Purpose
-#' Seamless creation of new bash scripts
+#' Seamless creation of new bash scripts for usage in the routine evaluations.
 #'
 #' ## Description
-#' Wrapper script for fbzws machines to create bash script based on stand-alone template
+#' This script is a short-cut or wrapper for creating a new bash script used in the routine analysis of fb-zws
 #'
 #' ## Details
-#' This script is a short cut to avoid specifying the path to the creation script and to the templates.
+#' Internally the bash script new_bash_script.sh is called with a fixed template for stand-alone routine scripts
 #'
 #' ## Example
-#' nbsosc.sh -o <new_script>
+#' nbsoro.sh -o <new_script>
 #'
 #' ## Set Directives
 #' General behavior of the script is driven by the following settings
@@ -58,7 +58,7 @@ SERVER=`hostname`                          # put hostname of server in variable 
 usage () {
   local l_MSG=$1
   $ECHO "Usage Error: $l_MSG"
-  $ECHO "Usage: $SCRIPT -o <new_script> -q"
+  $ECHO "Usage: $SCRIPT  -o <new_script> -q"
   $ECHO "  where -o <new_script>  --  (optional) name of new script  ..."
   $ECHO "        -q               --  (optional) run in quiet mode ..."
   $ECHO ""
@@ -156,8 +156,8 @@ fi
 #' ## Use creation script with fixed tempalte
 #' The standalone script is used with a specific template
 #+ create-so-script
-log_msg $SCRIPT " * Create new script based on template bash_script_so.template to: $OUTPUTPATH ..."
-$QBASHPATH/create/new_bash_script.sh -t $QBASHPATH/template/bash/bash_script_sa.template -o $OUTPUTPATH $ADDPARAM
+log_msg $SCRIPT " * Create new script based on template bash_script_sa_routine.template to: $OUTPUTPATH ..."
+$QBASHPATH/create/new_bash_script.sh -t $QBASHPATH/template/bash/bash_script_sa_routine.template -o $OUTPUTPATH $ADDPARAM
 
 
 #' ## End of Script
