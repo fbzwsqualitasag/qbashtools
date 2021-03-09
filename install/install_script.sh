@@ -133,6 +133,7 @@ then
   usage "-t <target_path> cannot be undefined"
 fi
 
+
 #' ## Install Mode 
 #' In case -f is specified, the installation is forced
 TRGPATH=${TRGDIR}/$(basename $SRCPATH)
@@ -141,8 +142,18 @@ then
   log_msg $SCRIPT " * Remove $TRGPATH to force install from $SRCPATH to target: $TRGDIR ..."
   rm -rf $TRGPATH
 fi
+
+
+#' ## Installation
+#' Depending whether only a file or a complete directory must be installed
+#' options to cp are different
 log_msg $SCRIPT "Copy script from $SRCPATH to target: $TRGDIR ..."
-cp $SRCPATH $TRGDIR
+if [ -d "$SRCPATH" ]
+then 
+  cp -r $SRCPATH $TRGDIR
+else 
+  cp $SRCPATH $TRGDIR
+fi
 
 
 #' Script ends here
