@@ -157,7 +157,7 @@ fi
 #' The standalone script is used with a specific template
 #+ create-so-script
 log_msg $SCRIPT " * Create new script based on template bash_script_so.template to: $OUTPUTPATH ..."
-$QBASHPATH/create/new_bash_script.sh -t $QBASHPATH/template/bash/bash_script_so.template -o $OUTPUTPATH $ADDPARAM
+$QBASHPATH/create/new_bash_script.sh -t $QBASHPATH/template/bash/bash_script_sa.template -o $OUTPUTPATH $ADDPARAM
 
 
 #' ## End of Script
