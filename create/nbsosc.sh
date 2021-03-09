@@ -60,6 +60,7 @@ usage () {
   $ECHO "Usage Error: $l_MSG"
   $ECHO "Usage: $SCRIPT -o <new_script>"
   $ECHO "  where -o <new_script>  --  (optional) name of new script  ..."
+  $ECHO "        -q               --  (optional) run in quiet mode ..."
   $ECHO ""
   exit 1
 }
@@ -107,16 +108,21 @@ start_msg
 #' Notice there is no ":" after "h". The leading ":" suppresses error messages from
 #' getopts. This is required to get my unrecognized option code to work.
 #+ getopts-parsing, eval=FALSE
+ADDPARAM=''
+QUIET='FALSE'
 LINUXBINPATH='/qualstorzws01/data_projekte/linuxBin'
 QBASHPATH=${LINUXBINPATH}/qbashtools
 OUTPUTPATH=`$DATE +"%Y%m%d%H%M%S"`_new_script.sh
-while getopts ":o:h" FLAG; do
+while getopts ":o:qh" FLAG; do
   case $FLAG in
     h)
       usage "Help message for $SCRIPT"
       ;;
     o)
       OUTPUTPATH=$OPTARG
+      ;;
+    q)
+      QUIET='TRUE'
       ;;
     :)
       usage "-$OPTARG requires an argument"
@@ -138,13 +144,20 @@ if test "$OUTPUTPATH" == ""; then
 fi
 
 
+#' ## Specify Additional Parameters
+#' Parameters passed to new_bash_script.sh
+#+ add-param
+if [ "$QUIET" == 'TRUE' ]
+then
+  ADDPARAM="$ADDPARAM -q"
+fi
+
 
 #' ## Use creation script with fixed tempalte
 #' The standalone script is used with a specific template
 #+ create-so-script
 log_msg $SCRIPT " * Create new script based on template bash_script_so.template to: $OUTPUTPATH ..."
-$QBASHPATH/create/new_bash_script.sh -t $QBASHPATH/template/bash/bash_script_so.template -o $OUTPUTPATH
-
+$QBASHPATH/create/new_bash_script.sh -t $QBASHPATH/template/bash/bash_script_so.template -o $OUTPUTPATH $ADDPARAM
 
 
 #' ## End of Script
