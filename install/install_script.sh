@@ -42,8 +42,9 @@ usage () {
   $ECHO "Usage Error: $l_MSG"
   $ECHO "Usage: $SCRIPT -s <source_path_script> -t <installation_target_path> -f"
   $ECHO "  where -s <source_path_script>        --  source path for script"
-  $ECHO "        -t <installation_target_path>  --  target path where script will be installed"
+  $ECHO "        -t <installation_target_dir>   --  target directory where script will be installed"
   $ECHO "        -f                             --  force installation, even if target exists"
+  $ECHO "        -r                             --  recursive mode creating installation directory"
   $ECHO ""
   exit 1
 }
@@ -85,15 +86,19 @@ start_msg
 #' getopts. This is required to get my unrecognized option code to work.
 #+ eval=FALSE
 FORCEINSTALL='FALSE'
+RECURSIVEMODE='FALSE'
 SRCPATH=''
 TRGDIR=''
-while getopts ":fs:t:h" FLAG; do
+while getopts ":frs:t:h" FLAG; do
   case $FLAG in
     h)
       usage "Help message for $SCRIPT"
       ;;
     f)
       FORCEINSTALL='TRUE'
+      ;;
+    r)
+      RECURSIVEMODE='TRUE'
       ;;
     s)
       if test -f $OPTARG; then
@@ -103,12 +108,7 @@ while getopts ":fs:t:h" FLAG; do
       fi
       ;;
     t)
-      if [ -d "$OPTARG" ]
-      then
-        TRGDIR=$OPTARG
-      else
-        usage "$OPTARG is not an installation target directory"
-      fi
+      TRGDIR=$OPTARG
       ;;
     :)
       usage "-$OPTARG requires an argument"
@@ -127,12 +127,20 @@ if [ "$SRCPATH" == "" ]
 then
   usage "-s <source_path> cannot be undefined"
 fi
-
 if [ "$TRGDIR" == "" ]
 then
   usage "-t <target_path> cannot be undefined"
 fi
 
+
+#' ## Recursive Mode
+#' If target directory does not exist and the recursive mode is specified 
+#' the target directory is created
+if [ "$RECURSIVEMODE" == 'TRUE' ] && [ ! -d "$TRGPATH" ]
+then
+  log_msg $SCRIPT " * Recursive mode create target directory: $TRGPATH ..."
+  mkdir -p "$TRGPATH"
+fi
 
 #' ## Install Mode 
 #' In case -f is specified, the installation is forced
@@ -159,4 +167,3 @@ fi
 #' Script ends here
 #+ eval=FALSE
 end_msg
-
