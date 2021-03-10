@@ -137,18 +137,13 @@ check_exist_file_fail $GETTAGSCRIPT
 $CP $TEMPLATEPATH $OUTPUTPATH
 
 
-#' ## Change Rights
-#' For the script to be executable, we have to change the access rights
-#+ chmod-script
-log_msg "Changed rights of $OUTPUTPATH to $DEFAULTSCRIPTRIGHT"
-$CHMOD $DEFAULTSCRIPTRIGHT $OUTPUTPATH
-
-
 #' ## Silent Mode
 #' In case, we are in silent mode, we stop here, no tag replacement is done
 #+ silent-mode
 if [ "$QUIET" == "TRUE" ]
 then
+  log_msg "Changed rights of $OUTPUTPATH to $DEFAULTSCRIPTRIGHT"
+  $CHMOD $DEFAULTSCRIPTRIGHT $OUTPUTPATH
   end_msg $SCRIPT
   exit 0
 fi
@@ -224,6 +219,12 @@ do
   # prepare input of new round from output of current round
   $MV $OUTPUTPATH.new $OUTPUTPATH
 done
+
+#' ## Change Rights
+#' For the script to be executable, we have to change the access rights
+#+ chmod-script
+log_msg "Changed rights of $OUTPUTPATH to $DEFAULTSCRIPTRIGHT"
+$CHMOD $DEFAULTSCRIPTRIGHT $OUTPUTPATH
 
 
 ##' ## End of Script
