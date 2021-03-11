@@ -74,8 +74,9 @@ SERVER=`hostname`                          # put hostname of server in variable 
 usage () {
   local l_MSG=$1
   $ECHO "Usage Error: $l_MSG"
-  $ECHO "Usage: $SCRIPT -s <script_path> -o <out_file> -f <out_format>"
+  $ECHO "Usage: $SCRIPT -s <script_path> -d <out_dir> -o <out_file> -f <out_format>"
   $ECHO "  where -s <script_path>  --  path to input script"
+  $ECHO "        -d <out_dir>      --  specify output directory"
   $ECHO "        -o <out_file>     --  name of output file"
   $ECHO "        -f <out_format>   --  can be changed to pdf, o/w html is used"
   $ECHO ""
@@ -123,9 +124,10 @@ start_msg
 #' getopts. This is required to get my unrecognized option code to work.
 #+ getopts-parsing
 SCRIPTPATH=""
+OUTDIR=""
 OUTFILE=""
 OUTFORMAT="html_document"
-while getopts ":f:s:o:h" FLAG; do
+while getopts ":d:f:s:o:h" FLAG; do
   case $FLAG in
     h)
       usage "Help message for $SCRIPT"
@@ -142,11 +144,11 @@ while getopts ":f:s:o:h" FLAG; do
         usage "$OPTARG isn't a regular file"
       fi
       ;;
+    d)
+      OUTDIR=$OPTARG
+      ;;
     o)
       OUTFILE=$OPTARG
-      ;;
-    c)
-      c_example="c_example_value"
       ;;
     :)
       usage "-$OPTARG requires an argument"
@@ -158,6 +160,7 @@ while getopts ":f:s:o:h" FLAG; do
 done
 
 shift $((OPTIND-1))  #This tells getopts to move on to the next argument.
+
 
 #' ## Checks for Command Line Arguments
 #' The following statements are used to check whether required arguments
@@ -172,24 +175,36 @@ fi
 #' For this script to work, the R-package `qgert` must be installed. If the
 #' package is available, it is installed by the following statement.
 #+ pkg-install, eval=FALSE
-R -e "if (!'qgert' %in% installed.packages()) devtools::install_github('pvrqualitasag/qgert', upgrade = 'always')" --no-save
+R -e "if (!'qgert' %in% installed.packages()) devtools::install_github('pvrqualitasag/qgert', upgrade = 'never')" --no-save
 
-#' ## Call the spin function in R
-#' Depending on whether an output file is specified the R-function `spin_sh` is
-#' called on the input script.
-#+ spin-sh-call
-if [ "$OUTFILE" == "" ]
+
+#' ## Create Output Path
+#' In case when only an output directory is specified, we set the output file 
+#' based on the name of the input script. In case an output directory is 
+#' given it is pre-pended to the output path, otherwise the current directory 
+#' is used as output directory
+#+ create-output-path
+if [ "$OUTFILE" == '' ]
 then
-  R -e "qgert::spin_sh(ps_sh_hair = '$SCRIPTPATH', pobi_output_format = '$OUTFORMAT')" --no-save
+  OUTPATH=$(echo $(basename $SCRIPTPATH) | sed -e "s|\.sh$||").Rmd
 else
-  R -e "qgert::spin_sh(ps_sh_hair = '$SCRIPTPATH', ps_out_rmd = '$OUTFILE', pobi_output_format = '$OUTFORMAT')" --no-save
+  OUTPATH=$OUTFILE
+fi
+# add output directory, if specified
+if [ "$OUTDIR" != '' ]
+then
+  OUTPATH=${OUTDIR}/${OUTPATH}
 fi
 
 
+#' ## Call the spin function in R
+#' The spin_sh function is called with the prepared output path stored in 
+#' $OUTPATH
+#+ spin-sh-call
+R -e "qgert::spin_sh(ps_sh_hair = '$SCRIPTPATH', ps_out_rmd = '$OUTPATH', pobi_output_format = '$OUTFORMAT')" --no-save
+
+
 #' ## End of Script
+#' Produce an end of script message.
 #+ end-msg
 end_msg
-
-
-
-

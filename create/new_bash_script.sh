@@ -26,7 +26,6 @@
 #' ## Global Constants
 #' ### Paths to shell tools
 #+ shell-tools, eval=FALSE
-# prog paths                               #                                         #
 BASENAME=/usr/bin/basename                 # PATH to basename function               #
 DIRNAME=/usr/bin/dirname                   # PATH to dirname function                #
 SED=`which sed`                            # PATH to sed                             #
@@ -51,10 +50,14 @@ SCRIPT=`$BASENAME ${BASH_SOURCE[0]}`       # Set Script Name variable           
 #' ###  Utilities
 #' A set of functions that can be used in different scripts are sourced from a
 #' utilities script.
+#+ source-util-script
 UTIL=$UTILDIR/bash_utils.sh
 source $UTIL
 
 #' ### Other Constants
+#' Constants specific to the replacement of placeholders and 
+#' to the creation of the result script.
+#+ specific-constants
 TEMPLATEPATH=$TEMPLATEDIR/bash/bash_script_so.template
 GETTAGSCRIPT=$UTILDIR/get_template_tags.sh
 OUTPUTPATH=`$DATE +"%Y%m%d%H%M%S"`_new_script.sh
@@ -64,14 +67,10 @@ DEFAULTSCRIPTRIGHT=755
 #' Tags are used in templates to indicate where placeholders are and where
 #' values must be inserted. For some values, we can come up with reasonable
 #' defaults.
+#+ tag-defaults
 STARTDATE=`$DATE +"%Y-%m-%d %H:%M:%S"`
 AUTHORABBREV=`$WHOAMI`
 AUTHORNAME=`$WHOAMI`
-
-
-#' ## Functions
-#' In this section user-defined functions that are specific for this script are
-#' defined in this section.
 
 
 #' ## Main Body of Script
@@ -111,7 +110,6 @@ while getopts :o:qt:vh FLAG; do
 done
 
 shift $((OPTIND-1))  #This tells getopts to move on to the next argument.
-
 
 
 #' ## Definition of Output Directory
@@ -166,9 +164,11 @@ done < <($GETTAGSCRIPT -t $TEMPLATEPATH -u)
 
 #' ## Notification before User Input
 #' Notify user that replacement values should be entered
+#+ notify-user-tag-replacement
 log_msg $SCRIPT "Enter replacement values for template tags ..."
 
 
+#' ## Tag Replacement Loop
 #' In a loop over the collected tags, the user is asked for replacement values
 #+ loop-user-input
 for i in ${!tags[@]}
@@ -227,8 +227,8 @@ log_msg "Changed rights of $OUTPUTPATH to $DEFAULTSCRIPTRIGHT"
 $CHMOD $DEFAULTSCRIPTRIGHT $OUTPUTPATH
 
 
-##' ## End of Script
+#' ## End of Script
+#' Show an end of script message
 #+ end-msg, eval=FALSE
 end_msg
-
 
