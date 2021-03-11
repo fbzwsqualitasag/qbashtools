@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">qbashtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -85,6 +85,17 @@
 
     
     
+<div id="summary" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summary" class="anchor"></a>Summary</h2>
+<p>The following statements can be used to create new bash scripts based on templates</p>
+<ul>
+<li><code>nbsaro.sh -o new_saro_script.sh</code></li>
+<li><code>nbsasc.sh -o new_sasc_script.sh</code></li>
+<li><code>nbutsc.sh -o new_utsc_script.sh</code></li>
+</ul>
+<p>The creator-scripts first ask the user to enter values to replace placeholders in the templates.</p>
+</div>
 <div id="disclaimer" class="section level2">
 <h2 class="hasAnchor">
 <a href="#disclaimer" class="anchor"></a>Disclaimer</h2>
@@ -93,7 +104,54 @@
 <div id="background" class="section level2">
 <h2 class="hasAnchor">
 <a href="#background" class="anchor"></a>Background</h2>
-<p>In genetic evaluations or statistical analyses many steps are identical or at least similar to some degree.</p>
+<p>Most data evaluations at Qualitas AG are using bash scripts to drive the flow of the individual evaluation steps. As a consequence of that the creation of new bash scripts is a frequently returning task. Creating bash scripts from scratch is a tedious task. Many of the bash scripts contain the same elements with only minor modifications. The use of templates which contain all the elements which are identical between the different scripts. The parts that vary between the individual scripts are entered by a creator script. The basic functionality of this process is shown below.</p>
+<p><img src="odg/templated-bash-script-creation.png" width="272"></p>
+</div>
+<div id="different-types-of-bash-scripts" class="section level2">
+<h2 class="hasAnchor">
+<a href="#different-types-of-bash-scripts" class="anchor"></a>Different Types of Bash Scripts</h2>
+<p>The current process of creating new scripts supports three types of different scripts.</p>
+<ol style="list-style-type: decimal">
+<li>stand-alone bash scripts used in the routine genetic evaluation under data_zws</li>
+<li>stand-alone bash scripts used outside of data_zws</li>
+<li>bash scripts that use a set of utility functions</li>
+</ol>
+<div id="stand-alone-bash-scripts-used-in-routine-saro" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stand-alone-bash-scripts-used-in-routine-saro" class="anchor"></a>Stand-alone Bash Scripts Used in Routine (SARO)</h3>
+<p>The bash scripts that are used in the routine genetic evaluation are scripts that are self-contained. That means all functions used in these scripts are defined in the script itself. So this type of script in its initial form does not have any external dependencies. This type of script can only run in a directory that is called ‘prog’.</p>
+</div>
+<div id="stand-alone-bash-scripts-sasc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stand-alone-bash-scripts-sasc" class="anchor"></a>Stand-alone Bash Scripts (SASC)</h3>
+<p>This type of scripts is the same as the scripts of type SARO, but the check of the directory where the script is saved is not done. Otherwise, any script of type SASC is also self-contained without any external dependencies.</p>
+</div>
+<div id="utility-based-bash-scripts-utsc" class="section level3">
+<h3 class="hasAnchor">
+<a href="#utility-based-bash-scripts-utsc" class="anchor"></a>Utility-Based Bash Scripts (UTSC)</h3>
+<p>Utility-based scripts depend on an external utilities file containing the definitions of a set of commonly used functions. This file is sourced at the beginning of each new script of type UTSC.</p>
+</div>
+</div>
+<div id="create-new-script" class="section level2">
+<h2 class="hasAnchor">
+<a href="#create-new-script" class="anchor"></a>Create New Script</h2>
+<p>New bash scripts are created with a creator-script which is called ‘new_bash_script.sh’. The user of the creator-script determines which type of bash script is created by passing the template file that belongs to the type of bash script to be created.</p>
+<p>For each script type (SARO, SASC and UTSC) there is a template file which contains all the elements which are constant across all scripts of the same type. The variable elements in the templates are represented by placeholders. The creator-script reads the template specific for each script type and searches for any placeholder in the template. For each of the placeholders in the template, the user is asked to enter a value with which the placeholder is replaced.</p>
+<p>The creation of a new bash script is simplified with three wrapper-scripts. The wrapper scripts are installed in the ‘linuxBin’ directory which is in the path for the user ‘zws’ on the server of FB-ZWS.</p>
+<ol style="list-style-type: decimal">
+<li>‘nbsaro.sh’: create new bash script of type SARO</li>
+<li>‘nbsasc.sh’: create new bash script of type SASC</li>
+<li>‘nbutsc.sh’: create new bash script of type UTSC</li>
+</ol>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<p>On the servers of FB-ZWS a new bash script of type SASC can be created with the following statement</p>
+<pre><code>nbsasc.sh -o create_shiny_plot.sh</code></pre>
+<p>This asks the user to enter values for the placeholders and creates the bash script ‘create_shiny_plot.sh’.</p>
+<hr>
+<p><em>Latest Changes: 2021-03-11 09:26:39 (pvr)</em></p>
 </div>
   </div>
 
