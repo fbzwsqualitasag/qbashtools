@@ -100,7 +100,7 @@ log_msg () {
 
 
 #' ## Main Body of Script
-#' The main body of the script starts here.
+#' The main body of the script starts here with a start script message.
 #+ start-msg, eval=FALSE
 start_msg
 
@@ -166,6 +166,7 @@ fi
 
 
 #' ## End of Script
+#' This is the end of the script with an end-of-script message.
 #+ end-msg, eval=FALSE
 end_msg
 

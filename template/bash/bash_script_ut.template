@@ -31,6 +31,7 @@ BASENAME=/usr/bin/basename                 # PATH to basename function          
 DIRNAME=/usr/bin/dirname                   # PATH to dirname function                      #
 
 #' ### Directories
+#' Specify some directory constants
 #+ script-directories, eval=FALSE
 INSTALLDIR=`$DIRNAME ${BASH_SOURCE[0]}`    # installation dir of bashtools on host         #
 UTILDIR=__BASHTOOLUTILDIR__                # directory containing utilities of bashtools   #
@@ -55,6 +56,7 @@ source $UTIL
 #' ## Functions
 #' In this section user-defined functions that are specific for this script are
 #' defined in this section.
+#+ start-fun-declaration
 
 
 #' ## Main Body of Script
@@ -116,6 +118,7 @@ fi
 
 
 #' ## End of Script
+#' This is the end of the script with an end-of-script message.
 #+ end-msg, eval=FALSE
 end_msg $SCRIPT
 
