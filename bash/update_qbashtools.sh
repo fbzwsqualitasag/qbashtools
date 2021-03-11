@@ -118,7 +118,7 @@ remote_update_repo () {
   then
     SSHCMD="${SSHCMD}"'if [ -d "$QHTZDIR" ];then cd $QHTZDIR;git fetch;git checkout origin/'"$REFERENCE"';else git -C "$QSRCDIR" clone '"$REPOURL"' -b '"$REFERENCE"';fi'
   else
-    SSHCMD="${SSHCMD}"'if [ -d "$QHTZDIR" ];then git -C $QSRCDIR pull '"$REPOURL"';else git -C $QSRCDIR clone '"$REPOURL"';fi'
+    SSHCMD="${SSHCMD}"'if [ -d "$QHTZDIR" ];then git -C $QHTZDIR pull '"$REPOURL"';else git -C $QSRCDIR clone '"$REPOURL"';fi'
   fi
 
   log_msg 'remote_update_repo' " ** SSHCMD: $SSHCMD"
