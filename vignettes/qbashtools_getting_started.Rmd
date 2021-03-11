@@ -12,7 +12,19 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+# rmdhelp::show_knit_hook_call()
+knitr::knit_hooks$set(hook_convert_odg = rmdhelp::hook_convert_odg)
 ```
+
+
+## Summary
+The following statements can be used to create new bash scripts based on templates
+
+* `nbsaro.sh -o new_saro_script.sh`
+* `nbsasc.sh -o new_sasc_script.sh`
+* `nbutsc.sh -o new_utsc_script.sh`
+
+The creator-scripts first ask the user to enter values to replace placeholders in the templates.
 
 
 ## Disclaimer
@@ -20,4 +32,57 @@ The basic steps of getting started with `qbashtools` are described.
 
 
 ## Background
-In genetic evaluations or statistical analyses many steps are identical or at least similar to some degree.   
+Most data evaluations at Qualitas AG are using bash scripts to drive the flow of the individual evaluation steps. As a consequence of that the creation of new bash scripts is a frequently returning task. Creating bash scripts from scratch is a tedious task. Many of the bash scripts contain the same elements with only minor modifications. The use of templates which contain all the elements which are identical between the different scripts. The parts that vary between the individual scripts are entered by a creator script. The basic functionality of this process is shown below.
+
+```{r templated-bash-script-creation, echo=FALSE, hook_convert_odg=TRUE, fig_path="odg"}
+#rmdhelp::use_odg_graphic(ps_path = 'odg/templated-bash-script-creation.odg')
+knitr::include_graphics(path = "odg/templated-bash-script-creation.png")
+```
+ 
+
+## Different Types of Bash Scripts
+The current process of creating new scripts supports three types of different scripts.
+
+1. stand-alone bash scripts used in the routine genetic evaluation under data_zws
+2. stand-alone bash scripts used outside of data_zws
+3. bash scripts that use a set of utility functions
+
+
+### Stand-alone Bash Scripts Used in Routine (SARO)
+The bash scripts that are used in the routine genetic evaluation are scripts that are self-contained. That means all functions used in these scripts are defined in the script itself. So this type of script in its initial form does not have any external dependencies. This type of script can only run in a directory that is called 'prog'. 
+
+
+### Stand-alone Bash Scripts (SASC)
+This type of scripts is the same as the scripts of type SARO, but the check of the directory where the script is saved is not done. Otherwise, any script of type SASC is also self-contained without any external dependencies.
+
+
+### Utility-Based Bash Scripts (UTSC)
+Utility-based scripts depend on an external utilities file containing the definitions of a set of commonly used functions. This file is sourced at the beginning of each new script of type UTSC.  
+
+
+## Create New Script
+New bash scripts are created with a creator-script which is called 'new_bash_script.sh'. The user of the creator-script determines which type of bash script is created by passing the template file that belongs to the type of bash script to be created. 
+
+For each script type (SARO, SASC and UTSC) there is a template file which contains all the elements which are constant across all scripts of the same type. The variable elements in the templates are represented by placeholders. The creator-script reads the template specific for each script type and searches for any placeholder in the template. For each of the placeholders in the template, the user is asked to enter a value with which the placeholder is replaced. 
+
+The creation of a new bash script is simplified with three wrapper-scripts. The wrapper scripts are installed in the 'linuxBin' directory which is in the path for the user 'zws' on the server of FB-ZWS.
+
+1. 'nbsaro.sh': create new bash script of type SARO
+2. 'nbsasc.sh': create new bash script of type SASC
+3. 'nbutsc.sh': create new bash script of type UTSC
+
+
+## Example
+On the servers of FB-ZWS a new bash script of type SASC can be created with the following statement
+
+```
+nbsasc.sh -o create_shiny_plot.sh
+```
+
+This asks the user to enter values for the placeholders and creates the bash script 'create_shiny_plot.sh'. 
+
+```{r echo=FALSE, results='asis'}
+cat(paste0("\n\n---\n\n _Latest Changes: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), " (", Sys.info()[["user"]], ")", collapse = ''), "\n")
+```
+
+
