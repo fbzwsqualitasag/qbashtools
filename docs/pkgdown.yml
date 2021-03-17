@@ -1,6 +1,7 @@
 pandoc: 2.11.4
 pkgdown: 1.5.1
 pkgdown_sha: ~
-articles: []
-last_built: 2021-03-11T13:44Z
+articles:
+  qbashtools_getting_started: qbashtools_getting_started.html
+last_built: 2021-03-17T16:44Z
 

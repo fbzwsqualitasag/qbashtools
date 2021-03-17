@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • qbashtools</title>
+<title>Build Reference Page For Bash Script Documentations — build_bash_ref • qbashtools</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,10 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Build Reference Page For Bash Script Documentations — build_bash_ref" />
+<meta property="og:description" content="Bash scripts given in a vector to ps_script_path are converted into
+html-pages. These pages are moved to an output directory. An index
+page is constructed which can be referred by other pages." />
 
 
 
@@ -58,7 +61,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -125,18 +128,43 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Build Reference Page For Bash Script Documentations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/fbzwsqualitasag/qbashtools/blob/master/R/build_bash_ref.R'><code>R/build_bash_ref.R</code></a></small>
+    <div class="hidden name"><code>build_bash_ref.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="qbashtools_getting_started.html">Getting Started with qbashtools</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p>Bash scripts given in a vector to ps_script_path are converted into
+html-pages. These pages are moved to an output directory. An index
+page is constructed which can be referred by other pages.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>build_bash_ref</span>(<span class='no'>ps_script_path</span>, <span class='no'>ps_out_dir</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>ps_script_path</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>ps_out_dir</th>
+      <td></td>
+    </tr>
+    </table>
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>build_bash_ref</span>(<span class='kw'>ps_script_path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='st'>'inst'</span>, <span class='st'>'bash'</span>),
+               <span class='kw'>ps_out_dir</span>     <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='st'>'docs'</span>, <span class='st'>'bash_ref'</span>) )
+}</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
