@@ -8,8 +8,10 @@
 #' page is constructed which can be referred by other pages.
 #' 
 #'
-#' @param ps_script_path 
-#' @param ps_out_dir 
+#' @param ps_script_path path to scripts
+#' @param ps_out_dir directory for output files
+#' @param ps_navbar_path, path to a navbar yml file
+#' @param pb_keep_rmd keep generated Rmd files
 #'
 #' @examples 
 #' \dontrun{
@@ -18,7 +20,10 @@
 #' }
 #' 
 #' @export build_bash_ref   
-build_bash_ref <- function(ps_script_path, ps_out_dir){
+build_bash_ref <- function(ps_script_path, 
+                           ps_out_dir,
+                           ps_navbar_path = NULL,
+                           pb_keep_rmd    = FALSE){
   
   # if ps_script_path is a directory, take all bash scripts in that directory as input
   if (fs::dir_exists(ps_script_path)){
@@ -39,7 +44,7 @@ build_bash_ref <- function(ps_script_path, ps_out_dir){
       fs::file_move(path = cur_out_path, new_path = ps_out_dir)
   }
   # create an index page
-  create_index_page(ps_out_dir = ps_out_dir)
+  create_index_page(ps_out_dir = ps_out_dir, pb_keep_rmd = pb_keep_rmd)
 }
 
 ## --- Create Index Page ------------------------------------------------------
@@ -55,13 +60,18 @@ build_bash_ref <- function(ps_script_path, ps_out_dir){
 #' 
 #' @param ps_out_dir directory with html-files for which index is to be created
 #' @param ps_out_file name of index output file
+#' @param ps_navbar_path, path to a navbar yml file
+#' @param pb_keep_rmd keep Rmd source file
 #'
 #' @examples 
 #' \dontrun{
 #' create_index_page(ps_out_dir = 'docs/bash_ref')
 #' }
 #' 
-create_index_page <- function(ps_out_dir, ps_out_file = 'index.html'){
+create_index_page <- function(ps_out_dir, 
+                              ps_out_file = 'index.html', 
+                              ps_navbar_path = NULL,
+                              pb_keep_rmd = FALSE){
   # vector with html files
   vec_html_path <- list.files(path = ps_out_dir, pattern = '.html$', full.names = TRUE)
   # result tibble
@@ -82,17 +92,21 @@ create_index_page <- function(ps_out_dir, ps_out_file = 'index.html'){
   }
   # write the index table, start with yaml header
   s_html_path <- file.path(ps_out_dir, ps_out_file)
-  s_rmd_path <- paste(fs::path_expand(ps_out_file), '.Rmd', sep = '')
+  s_rmd_path <- file.path(ps_out_dir, paste(fs::path_ext_remove(ps_out_file), '.Rmd', sep = ''))
   cat("---\noutput: html_document\n---\n\n", file = s_rmd_path)
   # Title
-  cat("## Bash Scripts\n\n", file = s_rmd_path, append = TRUE)
+  cat("## Bash Scripts\n\nIndex page for bash scripts.\n\n", file = s_rmd_path, append = TRUE)
   # Table
   s_index_table <- knitr::kable(tbl_index_table)
   cat(s_index_table, sep = '\n', file = s_rmd_path, append = TRUE)
+  # copy navbar, if it exists
+  if (fs::file_exists(ps_navbar_path))
+    fs::file_copy(path = ps_navbar_path, new_path = ps_out_dir)
   # render
   rmarkdown::render(input = s_rmd_path, output_file = s_html_path)
   # clean up rmd file
-  fs::file_delete(path = s_rmd_path)
+  if (!pb_keep_rmd)
+    fs::file_delete(path = s_rmd_path)
   return(invisible(TRUE))
 }
 

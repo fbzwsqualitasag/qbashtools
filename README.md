@@ -6,6 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+## Package website
+
+The package website is available under:
+<https://fbzwsqualitasag.github.io/qbashtools/>
+
+## Goal
+
 The goal of qbashtools is to have a collection of bash tools available
 that can be used to solve standard tasks such as
 
