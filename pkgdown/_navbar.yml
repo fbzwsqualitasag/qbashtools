@@ -1,3 +1,4 @@
+title: qbashtools
 type: default
 left:
   - text: "Home"
@@ -14,3 +15,4 @@ left:
 right:
   - text: GitHub
     href: https://github.com
+    
