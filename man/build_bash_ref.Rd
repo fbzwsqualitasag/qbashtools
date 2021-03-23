@@ -4,12 +4,24 @@
 \alias{build_bash_ref}
 \title{Build Reference Page For Bash Script Documentations}
 \usage{
-build_bash_ref(ps_script_path, ps_out_dir)
+build_bash_ref(
+  ps_script_path,
+  ps_out_dir,
+  ps_navbar_path = NULL,
+  pb_force_output = FALSE,
+  pb_keep_rmd = FALSE
+)
 }
 \arguments{
-\item{ps_script_path}{}
+\item{ps_script_path}{path to scripts}
 
-\item{ps_out_dir}{}
+\item{ps_out_dir}{directory for output files}
+
+\item{ps_navbar_path, }{path to a navbar yml file}
+
+\item{pb_force_output}{force to create output}
+
+\item{pb_keep_rmd}{keep generated Rmd files}
 }
 \description{
 Bash scripts given in a vector to ps_script_path are converted into
@@ -19,7 +31,8 @@ page is constructed which can be referred by other pages.
 \examples{
 \dontrun{
 build_bash_ref(ps_script_path = file.path('inst', 'bash'), 
-               ps_out_dir     = file.path('docs', 'bash_ref') )
+               ps_out_dir     = file.path('docs', 'bash_ref'),
+               ps_navbar_path = file.path('pkgdown', '_navbar.yml') )
 }
 
 }

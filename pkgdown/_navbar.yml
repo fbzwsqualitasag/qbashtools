@@ -1,18 +1,22 @@
 title: qbashtools
 type: default
-left:
-  - text: "Home"
-    icon: fas fa-home fa-lg
-    href: https://fbzwsqualitasag.github.io/qbashtools/index.html
-  - text: "Bash Scripts"
-    href: index.html
-  - text: "Reference"
-    href: https://fbzwsqualitasag.github.io/qbashtools/reference/index.html
-  - text: "Articles"
-    href: https://fbzwsqualitasag.github.io/qbashtools/articles/index.html
-  - text: "Changelog"  
-    href: https://fbzwsqualitasag.github.io/qbashtools/news/index.html
 right:
-  - text: GitHub
-    href: https://github.com
-    
+  github:
+    text: Github
+    href: https://github.com/fbzwsqualitasag/qbashtools/
+left:
+  home:
+    text: Home
+    href: https://fbzwsqualitasag.github.io/qbashtools/index.html
+  bash:
+    text: Bash
+    href: https://fbzwsqualitasag.github.io/qbashtools/bash_ref/index.html
+  reference:
+    text: Reference
+    href: https://fbzwsqualitasag.github.io/qbashtools/reference/index.html
+  news:
+    text: News
+    href: https://fbzwsqualitasag.github.io/qbashtools/news/index.html
+  articles:
+    text: Articles
+    href: https://fbzwsqualitasag.github.io/qbashtools/articles/index.html

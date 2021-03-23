@@ -4,12 +4,24 @@
 \alias{create_index_page}
 \title{Create Index Page for Bash Scripts}
 \usage{
-create_index_page(ps_out_dir, ps_out_file = "index.html")
+create_index_page(
+  ps_out_dir,
+  ps_out_file = "index.html",
+  ps_navbar_path = NULL,
+  pb_force_output = FALSE,
+  pb_keep_rmd = FALSE
+)
 }
 \arguments{
 \item{ps_out_dir}{directory with html-files for which index is to be created}
 
 \item{ps_out_file}{name of index output file}
+
+\item{ps_navbar_path, }{path to a navbar yml file}
+
+\item{pb_force_output}{force to create output}
+
+\item{pb_keep_rmd}{keep Rmd source file}
 }
 \description{
 For a given directory containing html-documentations of bash scripts,

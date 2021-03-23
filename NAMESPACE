@@ -2,3 +2,4 @@
 
 export(build_bash_ref)
 export(spin_sh)
+export(template_navbar_bash_ref)

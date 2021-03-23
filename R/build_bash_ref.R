@@ -11,6 +11,7 @@
 #' @param ps_script_path path to scripts
 #' @param ps_out_dir directory for output files
 #' @param ps_navbar_path, path to a navbar yml file
+#' @param pb_force_output force to create output
 #' @param pb_keep_rmd keep generated Rmd files
 #'
 #' @examples 
@@ -23,8 +24,9 @@
 #' @export build_bash_ref   
 build_bash_ref <- function(ps_script_path, 
                            ps_out_dir,
-                           ps_navbar_path = NULL,
-                           pb_keep_rmd    = FALSE){
+                           ps_navbar_path  = NULL,
+                           pb_force_output = FALSE,
+                           pb_keep_rmd     = FALSE){
   
   # if ps_script_path is a directory, take all bash scripts in that directory as input
   if (fs::dir_exists(ps_script_path)){
@@ -45,9 +47,10 @@ build_bash_ref <- function(ps_script_path,
       fs::file_move(path = cur_out_path, new_path = ps_out_dir)
   }
   # create an index page
-  create_index_page(ps_out_dir = ps_out_dir, 
-                    ps_navbar_path = ps_navbar_path, 
-                    pb_keep_rmd = pb_keep_rmd)
+  create_index_page(ps_out_dir      = ps_out_dir, 
+                    ps_navbar_path  = ps_navbar_path, 
+                    pb_force_output = pb_force_output,
+                    pb_keep_rmd     = pb_keep_rmd)
 }
 
 ## --- Create Index Page ------------------------------------------------------
@@ -64,6 +67,7 @@ build_bash_ref <- function(ps_script_path,
 #' @param ps_out_dir directory with html-files for which index is to be created
 #' @param ps_out_file name of index output file
 #' @param ps_navbar_path, path to a navbar yml file
+#' @param pb_force_output force to create output
 #' @param pb_keep_rmd keep Rmd source file
 #'
 #' @examples 
@@ -72,9 +76,10 @@ build_bash_ref <- function(ps_script_path,
 #' }
 #' 
 create_index_page <- function(ps_out_dir, 
-                              ps_out_file = 'index.html', 
-                              ps_navbar_path = NULL,
-                              pb_keep_rmd = FALSE){
+                              ps_out_file     = 'index.html', 
+                              ps_navbar_path  = NULL,
+                              pb_force_output = FALSE,
+                              pb_keep_rmd     = FALSE){
   # vector with html files
   vec_html_path <- list.files(path = ps_out_dir, pattern = '.html$', full.names = TRUE)
   # result tibble
@@ -103,8 +108,14 @@ create_index_page <- function(ps_out_dir,
   s_index_table <- knitr::kable(tbl_index_table)
   cat(s_index_table, sep = '\n', file = s_rmd_path, append = TRUE)
   # copy navbar, if it exists
-  if (file.exists(ps_navbar_path))
-    fs::file_copy(path = ps_navbar_path, new_path = file.path(ps_out_dir, basename(ps_navbar_path)))
+  if (file.exists(ps_navbar_path)){
+    s_new_nb_path <- file.path(ps_out_dir, basename(ps_navbar_path))
+    if (pb_force_output) fs::file_delete(s_new_nb_path)
+    fs::file_copy(path = ps_navbar_path, new_path = s_new_nb_path)
+  } else {
+    cat(" *** CANNOT FIND navbar: ", ps_navbar_path, "\n")
+  }
+    
   # render
   rmarkdown::render(input = s_rmd_path, output_file = s_html_path)
   # clean up rmd file
