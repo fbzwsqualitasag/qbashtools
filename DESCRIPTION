@@ -1,6 +1,6 @@
 Package: qbashtools
 Title: Bash Tools for FB-ZWS Qualitas AG
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: 
     person(given = "Peter",
            family = "von Rohr",
