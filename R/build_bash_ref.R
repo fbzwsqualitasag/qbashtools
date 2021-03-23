@@ -16,7 +16,8 @@
 #' @examples 
 #' \dontrun{
 #' build_bash_ref(ps_script_path = file.path('inst', 'bash'), 
-#'                ps_out_dir     = file.path('docs', 'bash_ref') )
+#'                ps_out_dir     = file.path('docs', 'bash_ref'),
+#'                ps_navbar_path = file.path('pkgdown', '_navbar.yml') )
 #' }
 #' 
 #' @export build_bash_ref   
@@ -44,7 +45,9 @@ build_bash_ref <- function(ps_script_path,
       fs::file_move(path = cur_out_path, new_path = ps_out_dir)
   }
   # create an index page
-  create_index_page(ps_out_dir = ps_out_dir, pb_keep_rmd = pb_keep_rmd)
+  create_index_page(ps_out_dir = ps_out_dir, 
+                    ps_navbar_path = ps_navbar_path, 
+                    pb_keep_rmd = pb_keep_rmd)
 }
 
 ## --- Create Index Page ------------------------------------------------------
@@ -100,8 +103,8 @@ create_index_page <- function(ps_out_dir,
   s_index_table <- knitr::kable(tbl_index_table)
   cat(s_index_table, sep = '\n', file = s_rmd_path, append = TRUE)
   # copy navbar, if it exists
-  if (fs::file_exists(ps_navbar_path))
-    fs::file_copy(path = ps_navbar_path, new_path = ps_out_dir)
+  if (file.exists(ps_navbar_path))
+    fs::file_copy(path = ps_navbar_path, new_path = file.path(ps_out_dir, basename(ps_navbar_path)))
   # render
   rmarkdown::render(input = s_rmd_path, output_file = s_html_path)
   # clean up rmd file
